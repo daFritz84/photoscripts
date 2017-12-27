@@ -4,7 +4,7 @@
 #
 # array of considered filetypes
 #
-FILETYPES=("*.jpg, *.JPG");
+FILETYPES=("*.jpg *.JPG");
 #
 #
 ###############################################################################
