@@ -4,7 +4,7 @@
 #
 # array of considered filetypes
 #
-FILETYPES=("*.jpg");
+FILETYPES=("*.jpg, *.JPG");
 #
 #
 ###############################################################################
@@ -19,7 +19,7 @@ fi;
 for file in $FILETYPES; do
     date_str="$(
         exiftool -d %Y%m%d_%H%M%S $file |
-        awk -F': ' '/Create Date/{print $2}'
+        awk -F': ' '/Create Date/{print $2; exit}'
         )"
     filetype="$(echo $file|awk -F . '{print $NF}')"
     echo "renaming $file to $date_str.$filetype"
