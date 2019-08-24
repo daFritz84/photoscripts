@@ -18,10 +18,17 @@ fi;
 # Scanning loop
 for file in $FILETYPES; do
     date_str="$(
-        exiftool -d %Y%m%d_%H%M%S $file |
+        exiftool -d %Y%m%d_%H%M%S "$file" |
         awk -F': ' '/Create Date/{print $2; exit}'
         )"
-    filetype="$(echo $file|awk -F . '{print $NF}')"
+
+    # for some reason, the file has no creation date -> fail with error
+    if [ "$date_str" == "" ]; then
+      echo "no creation date found in $file"
+      exit 1
+    fi;
+
+    filetype="$(echo "$file"|awk -F . '{print $NF}')"
     echo "renaming $file to $date_str.$filetype"
 
     mv "$file" "$date_str.$filetype"
